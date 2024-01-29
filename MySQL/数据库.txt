@@ -1,0 +1,8 @@
+ip地址：59.110.6.63
+用户名：root
+密码：Qianfankeji!234
+数据库：wlwtext
+表名：tb_monitor_param
+环境监测点 8dfeaf752b4d40b4a23819478c90f9ae
+土壤监测点 80280c443ed84233bb9acbbfd7a59ed4
+端口号：20011

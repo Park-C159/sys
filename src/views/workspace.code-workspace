@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "..\\..\\.."
+		},
+		{
+			"path": "..\\..\\..\\..\\game\\2048"
+		},
+		{
+			"path": "C:\\Users\\CityOfSky\\Desktop\\heart"
+		},
+		{
+			"path": "C:\\Users\\CityOfSky\\Documents\\WeChat Files\\wxid_tj6thz495a6m22\\FileStorage\\File\\2022-12\\2048\\2048"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "2048"
+	}
+}
