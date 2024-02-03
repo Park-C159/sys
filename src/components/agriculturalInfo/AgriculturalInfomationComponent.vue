@@ -129,7 +129,7 @@
             <el-form-item>
               <el-date-picker
                 v-model="formLabelAlign.date1"
-                type="datetime"
+                type="date"
                 style="width: 100%"
                 placeholder="选择日期时间"
               >
@@ -287,11 +287,11 @@ export default {
           var response = res.data;
           if ((response.code = 200)) {
             let data = response.data;
+            this.getAgricultureInfo();
             this.$message({
               type: "success",
               message: "新建成功！",
             });
-            this.getAgricultureInfo();
           } else {
             this.$message({
               type: "error",
@@ -359,6 +359,7 @@ export default {
           var response = res.data;
           if (response.code == 200){
             let data = response.data;
+            this.getAgricultureInfo();
             this.$message({
               type:"success",
               message:response.msg
