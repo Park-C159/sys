@@ -47,7 +47,10 @@
         >
       </div>
       <div class="graph" v-if="show1">
-        <el-empty style="width: 100%; height: 100%;" description="请开始查询"></el-empty>
+        <el-empty
+          style="width: 100%; height: 100%"
+          description="请开始查询"
+        ></el-empty>
       </div>
       <div class="graph" v-else>
         <el-skeleton v-if="show" :rows="12" animated />
@@ -274,7 +277,7 @@ export default {
       this.end = e[1];
     },
     async queryInfo() {
-        this.show1 = 0;
+      this.show1 = 0;
       if (!this.start) return;
       let url = this.$store.state.url;
       url = url + "query";
@@ -348,7 +351,7 @@ export default {
       link.click();
     },
     async getData() {
-        this.show1 = 0;
+      this.show1 = 0;
       var params = {
         start: this.start,
         end: this.end,

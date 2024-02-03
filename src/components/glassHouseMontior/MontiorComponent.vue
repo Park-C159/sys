@@ -106,7 +106,6 @@ export default {
         data:this.data.ourdoor_radiation,
         time:datetime
       };
-      console.log(this.data)
 
     }
   },

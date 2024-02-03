@@ -50,7 +50,9 @@
           <div class="container" v-if="select == '1' && data">
             <MontiorComponent :data="data" />
           </div>
-          <div v-else-if="select == 2">农事信息管理</div>
+          <div v-else-if="select == 2">
+            <AgriculturalInfomationComponent />
+          </div>
           <div v-else-if="select == 3">温室预警功能</div>
           <div v-else-if="select == 4">
             <HistoryComponent />
@@ -67,6 +69,7 @@
 import HeadComponent from "@/components/HeadComponent.vue"
 import MontiorComponent from "@/components/glassHouseMontior/MontiorComponent";
 import HistoryComponent from "@/components/history/HistoryComponent.vue"
+import AgriculturalInfomationComponent from "@/components/agriculturalInfo/AgriculturalInfomationComponent.vue"
 
 import cloudyAndSunny from '@/assets/images/cloudy_and_sunny.png';
 import cloudyAndSunnyHL from '@/assets/images/cloudy_and_sunny_HL.png';
@@ -105,6 +108,7 @@ export default {
     HistoryComponent,
     MontiorComponent,
     HeadComponent,
+    AgriculturalInfomationComponent,
   },
   methods: {
     handleOpen(key, keyPath) {
