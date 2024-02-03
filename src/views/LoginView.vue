@@ -44,23 +44,19 @@ methods: {
       this.$router.push("/regist")
     },
     log(){
-      // console.log(url);
       if(this.isCUname==false&& this.isCUpwd == false&&this.uname!=''&&this.upwd!=''){
         var url = this.$store.state.url+"/login";
         var params = {
           uname: this.uname,
           upwd: this.upwd
         };
-        // console.log(params)
         this.$axios.post(url,params)
         .then(res => {
           let data = res.data;
-          // console.log(data)
           if(data.code == 200){
             let userInfo  = data.data[0];
             this.$store.state.userInfo = userInfo;
             localStorage.setItem("userInfo", JSON.stringify(userInfo));
-            // console.log(this.$store.state.userInfo[0])
             this.$store.state.islogin = true;
             localStorage.setItem("isLogin", true);
             this.$message({
@@ -88,16 +84,13 @@ methods: {
       }else{
         this.$message.error('错误，请核对登录信息！');
       }
-        // this.$router.push("/home")
     },
     unameCheck(){
       var un = this.uname;
-      // console.log(un);
       var uPattern = /^[a-zA-Z0-9_-]{4,16}$/;
       let isCUname = uPattern.test(un);
       if(!isCUname){this.isCUname = true;}
       else this.isCUname = false;
-      // console.log(isCUname)
     },
     upwdCheck(){
       var up = this.upwd;
@@ -108,7 +101,6 @@ methods: {
       else this.isCUpwd = false;
     },
     test(){
-      // console.log(this.uname);
     }
 },
 mounted() {

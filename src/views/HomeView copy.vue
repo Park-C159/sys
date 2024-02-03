@@ -19,17 +19,26 @@
               </h2>
               <div>
                 <ul
-                  style="padding-left: 10px; overflow: hidden; margin: 10px 0;"
+                  style="padding-left: 10px; overflow: hidden; margin: 10px 0"
                   v-for="(item, i) in warn"
                   :key="i"
                 >
-                  <li style="display: flex; align-tiems: center; justify-content: space-between;">
-                    
-                    <span style="font=size: 1.5vh;line-height: 2vh;"><i class="el-icon-tickets"></i>
-                    &nbsp;{{ item.content }}</span>
-                    <span style="font-size: 1vh; line-height:2vh">{{ item.wtime }}</span>
+                  <li
+                    style="
+                      display: flex;
+                      align-tiems: center;
+                      justify-content: space-between;
+                    "
+                  >
+                    <span style="font=size: 1.5vh; line-height: 2vh"
+                      ><i class="el-icon-tickets"></i> &nbsp;{{
+                        item.content
+                      }}</span
+                    >
+                    <span style="font-size: 1vh; line-height: 2vh">{{
+                      item.wtime
+                    }}</span>
                   </li>
-                  
                 </ul>
                 <el-pagination
                   @current-change="handleCurrentChange"
@@ -208,7 +217,8 @@
               </div>
             </div>
           </div>
-          <div class="caozuo"
+          <div
+            class="caozuo"
             style="height: 31.5vh; cursor: pointer"
             @click="manage"
           >
@@ -223,11 +233,17 @@
                 "
               >
                 <img src="../assets/化肥.png" style="width: 10vh" alt="" />
-                <table style="font-size: 1.8vh; cellspacing: 1; margin-top: 2vh" v-for="(item, i) in manure" :key="i">
+                <table
+                  style="font-size: 1.8vh; cellspacing: 1; margin-top: 2vh"
+                  v-for="(item, i) in manure"
+                  :key="i"
+                >
                   <tr>
-                    <td style=" font-size:1.5vh; text-align: center;">{{item.mtime}}</td>
-                    <td>{{item.mname}}</td>
-                    <td>{{item.mdose}}</td>
+                    <td style="font-size: 1.5vh; text-align: center">
+                      {{ item.mtime }}
+                    </td>
+                    <td>{{ item.mname }}</td>
+                    <td>{{ item.mdose }}</td>
                   </tr>
                 </table>
               </div>
@@ -240,10 +256,16 @@
                 "
               >
                 <img src="../assets/guangai.png" style="width: 10vh" alt="" />
-                <table style="font-size: 1.8vh; cellspacing: 1; margin-top: 2vh" v-for="(item, i) in water" :key="i">
+                <table
+                  style="font-size: 1.8vh; cellspacing: 1; margin-top: 2vh"
+                  v-for="(item, i) in water"
+                  :key="i"
+                >
                   <tr>
-                    <td style="font-size:1.5vh; text-align: center;">{{item.mtime}}</td>
-                    <td>{{item.mdose}}</td>
+                    <td style="font-size: 1.5vh; text-align: center">
+                      {{ item.mtime }}
+                    </td>
+                    <td>{{ item.mdose }}</td>
                   </tr>
                 </table>
               </div>
@@ -256,11 +278,17 @@
                 "
               >
                 <img src="../assets/penyao.png" style="width: 10vh" alt="" />
-                <table style="font-size: 1.8vh; cellspacing: 1; margin-top: 2vh" v-for="(item, i) in pesticide" :key="i">
+                <table
+                  style="font-size: 1.8vh; cellspacing: 1; margin-top: 2vh"
+                  v-for="(item, i) in pesticide"
+                  :key="i"
+                >
                   <tr>
-                    <td style="font-size:1.5vh; text-align: center;">{{item.mtime}}</td>
-                    <td>{{item.mname}}</td>
-                    <td>{{item.mdose}}</td>
+                    <td style="font-size: 1.5vh; text-align: center">
+                      {{ item.mtime }}
+                    </td>
+                    <td>{{ item.mname }}</td>
+                    <td>{{ item.mdose }}</td>
                   </tr>
                 </table>
               </div>
@@ -390,11 +418,11 @@ export default {
       minutes: {},
       days: {},
       warning: [],
-      warn:[],
+      warn: [],
       totalNum: 0,
-      manure:[],
-      water:[],
-      pesticide:[],
+      manure: [],
+      water: [],
+      pesticide: [],
     };
   },
   components: {
@@ -402,9 +430,9 @@ export default {
     HeadComponent,
   },
   methods: {
-    handleCurrentChange(val){
-      var start = (val-1)*4;
-      this.warn = this.warning.slice(start, start+4);
+    handleCurrentChange(val) {
+      var start = (val - 1) * 4;
+      this.warn = this.warning.slice(start, start + 4);
     },
     selectChange() {
       if (this.value == 1) {
@@ -1570,9 +1598,11 @@ export default {
             },
           },
           splitNum: 4,
+
           axisLabel: {
             showMaxLabel: true,
             showMinLabel: true,
+            
           },
         },
         yAxis: {
@@ -2030,9 +2060,9 @@ export default {
                 ? "0" + date.getSeconds()
                 : date.getSeconds();
             warning[i].wtime = Y + M + D + h + m + s;
-         }
+          }
           this.warning = warning;
-          this.warn = warning.slice(0,4);
+          this.warn = warning.slice(0, 4);
 
           this.totalNum = warning.length;
         })
@@ -2040,7 +2070,7 @@ export default {
           console.error(err);
         });
     },
-    getManage(){
+    getManage() {
       let url = this.$store.state.url;
       url = url + "manage";
       this.$axios
@@ -2048,7 +2078,9 @@ export default {
         .then((res) => {
           let manage = res.data.data;
           localStorage.setItem("manage", JSON.stringify(manage));
-          let n = 0,j = 0, k = 0;
+          let n = 0,
+            j = 0,
+            k = 0;
           for (let i = 0; i < manage.length; i++) {
             // console.log(manage[i].mtime)
             var date = new Date(manage[i].mtime.slice(0, -4));
@@ -2057,11 +2089,13 @@ export default {
               (date.getMonth() + 1 < 10
                 ? "0" + (date.getMonth() + 1)
                 : date.getMonth() + 1) + "/";
-            var D = (date.getDate()<10?"0"+date.getDate():date.getDate()) + "\n";
+            var D =
+              (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) +
+              "\n";
             var h = date.getHours() + ":";
             var m =
               date.getMinutes() < 10
-                ? "0" + date.getMinutes() 
+                ? "0" + date.getMinutes()
                 : date.getMinutes();
             var s =
               date.getSeconds() < 10
@@ -2069,23 +2103,23 @@ export default {
                 : date.getSeconds();
             manage[i].mtime = Y + M + D + h + m;
 
-            if(manage[i].mclass == 1 && n<3){
+            if (manage[i].mclass == 1 && n < 3) {
               this.manure.push(manage[i]);
               n++;
-            }else if(manage[i].mclass == 2&&j<3){
+            } else if (manage[i].mclass == 2 && j < 3) {
               this.water.push(manage[i]);
-              j++
-            }else if(manage[i].mclass == 3&& k<3){
+              j++;
+            } else if (manage[i].mclass == 3 && k < 3) {
               this.pesticide.push(manage[i]);
               k++;
             }
-         }
+          }
           this.$store.state.manage = manage;
         })
         .catch((err) => {
           console.error(err);
         });
-    }
+    },
   },
   mounted() {
     this.time1 = setInterval(() => {

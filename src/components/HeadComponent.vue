@@ -3,7 +3,7 @@
     <div class="head"> 
       <el-row>
         <el-col :span="10">
-          logo
+          功能导航
         </el-col>
         <el-col :span="10">
           <div class="left" @click="toHome">温室种植管理与决策系统</div>

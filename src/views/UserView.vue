@@ -97,7 +97,6 @@ export default {
         date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
       user.birthday = Y + M + D;
       this.userInfo = user;
-      console.log(this.userInfo);
     },
     test() {
       console.log(localStorage);

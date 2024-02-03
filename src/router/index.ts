@@ -10,6 +10,7 @@ import testView from '../views/test.vue'
 import QueryView from '../views/QueryView.vue'
 import ForgetView from '../views/ForgetView.vue'
 import ModView from '../views/ModView.vue'
+import TestView from '../views/HomeView copy.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,11 @@ const routes: Array<RouteConfig> = [
     path: '/home',
     name: 'home',
     component: HomeView
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: TestView
   },
   {
     path: '/mod',

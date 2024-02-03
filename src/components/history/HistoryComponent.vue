@@ -1,7 +1,6 @@
 <template>
   <div>
-    <HeadComponent />
-    <div class="container">
+    <div class="historyContainer">
       <div class="block">
         <div class="demonstration">&nbsp;</div>
         <el-date-picker
@@ -47,13 +46,17 @@
           >查询</el-button
         >
       </div>
-      <div style="width: 100%; margin-top: 10vh">
+      <div class="graph" v-if="show1">
+        <el-empty style="width: 100%; height: 100%;" description="请开始查询"></el-empty>
+      </div>
+      <div class="graph" v-else>
         <el-skeleton v-if="show" :rows="12" animated />
-        <div>
-          <div id="query" style="width: 100%; height: 70vh"></div>
+        <div style="width: 100%; height: 100%">
+          <div id="query"></div>
         </div>
       </div>
       <el-button
+        class="button"
         type="primary"
         size="medium"
         plain
@@ -148,7 +151,7 @@ export default {
       ],
       value: "",
       myChart: null,
-      show: 0,
+      show: 1,
       show1: 1,
       start: null,
       end: null,
@@ -156,10 +159,6 @@ export default {
       data: {},
       DATA: {},
       select1: "",
-      test: {
-        Ph: [1, 2, 3, 4],
-        air_humidity: [1, 23, 4341, 12],
-      },
       q: 1,
     };
   },
@@ -180,102 +179,6 @@ export default {
         }
       }
     },
-    async getSoil(data, num) {
-      // var h = JSON.parse(localStorage.hours);
-      var h = data;
-      let j = 0;
-      var time = [];
-      var H = [];
-      var air_temperture = [];
-      var soil_temperture10 = [];
-      var soil_temperture20 = [];
-      var soil_temperture30 = [];
-      var soil_temperture40 = [];
-      var soil_temperture50 = [];
-      var air_humidity = [];
-      var soil_humidity10 = [];
-      var soil_humidity20 = [];
-      var soil_humidity30 = [];
-      var soil_humidity40 = [];
-      var soil_humidity50 = [];
-      var light_intencity = [];
-      var co2 = [];
-      var Ph = [];
-      var rain_fall = [];
-      var electrical_conductivity = [];
-      var battery_voltage = [];
-      var mainboard_temperture = [];
-      var wind_direction = [];
-      var wind_speed = [];
-      var air_pressure = [];
-
-      for (let i = num - 1; i >= 0; i--) {
-        time[j] = new Date(h[i].create_time.slice(0, -4));
-        // time[j] = new Date(this.hours[i].create_time)
-        H[j] =
-          time[j].getMonth() +
-          1 +
-          "月" +
-          time[j].getDate() +
-          "日" +
-          time[j].getHours() +
-          ":00";
-        air_temperture[j] = h[i].air_temperture;
-        air_humidity[j] = h[i].air_humidity;
-        light_intencity[j] = h[i].light_intencity;
-        co2[j] = h[i].co2;
-        Ph[j] = h[i].Ph;
-        rain_fall[j] = h[i].rain_fall;
-        electrical_conductivity[j] = h[i].electrical_conductivity;
-        battery_voltage[j] = h[i].battery_voltage;
-        mainboard_temperture[j] = h[i].mainboard_temperture;
-        wind_direction[j] = h[i].wind_direction;
-        wind_speed[j] = h[i].wind_speed;
-        air_pressure[j] = h[i].air_pressure;
-
-        j++;
-      }
-      j = 0;
-      for (let i = h.length - 1; i > num; i--) {
-        soil_temperture10[j] = h[i].soil_temperture10;
-        soil_temperture20[j] = h[i].soil_temperture20;
-        soil_temperture30[j] = h[i].soil_temperture30;
-        soil_temperture40[j] = h[i].soil_temperture40;
-        soil_temperture50[j] = h[i].soil_temperture50;
-        soil_humidity10[j] = h[i].soil_humidity10;
-        soil_humidity20[j] = h[i].soil_humidity20;
-        soil_humidity30[j] = h[i].soil_humidity30;
-        soil_humidity40[j] = h[i].soil_humidity40;
-        soil_humidity50[j] = h[i].soil_humidity50;
-        // l[j] =  h[i].light_;
-        j++;
-      }
-      this.DATA = {
-        create_time: H,
-        air_temperture: air_temperture,
-        soil_temperture10: soil_temperture10,
-        soil_temperture20: soil_temperture20,
-        soil_temperture30: soil_temperture30,
-        soil_temperture40: soil_temperture40,
-        soil_temperture50: soil_temperture50,
-        air_humidity: air_humidity,
-        soil_humidity10: soil_humidity10,
-        soil_humidity20: soil_humidity20,
-        soil_humidity30: soil_humidity30,
-        soil_humidity40: soil_humidity40,
-        soil_humidity50: soil_humidity50,
-        light_intencity: light_intencity,
-        co2: co2,
-        Ph: Ph,
-        rain_fall: rain_fall,
-        electrical_conductivity: electrical_conductivity,
-        battery_voltage: battery_voltage,
-        mainboard_temperture: mainboard_temperture,
-        wind_direction: wind_direction,
-        wind_speed: wind_speed,
-        air_pressure: air_pressure,
-      };
-    },
     drawChart() {
       // 基于准备好的dom，初始化echarts实例  这个和上面的main对应
       this.myChart = this.$echarts.init(document.getElementById("query"));
@@ -289,6 +192,37 @@ export default {
               color: "#999",
             },
           },
+          formatter: (params) => {
+            // params 是一个数组，包含了触发 tooltip 的所有数据点信息
+            // 对于简单的线图，我们通常只需要处理第一个数据点
+            let result = params
+              .map((data) => {
+                // data.value 是当前数据点的值
+                // data.seriesName 是系列名称，如果需要可以一同显示
+                let value = data.value;
+                for (let option of this.options) {
+                  if (option.value == this.value) {
+                    var seriesName = option.label + "：";
+                    break;
+                  }
+                }
+                // console.log(this.value,this.options)
+                // console.log(this.options[this.value])
+                // let seriesName = this.options[this.value];
+                // 使用 toFixed(2) 来格式化数字，保留两位小数
+                return `${seriesName}${value.toFixed(2)}`;
+              })
+              .join("<br/>");
+
+            // 如果你的 X 轴是时间或者其他类型的数据，你可能也想要格式化它
+            // 例如，如果是时间，可以使用 dayjs 或其他日期处理库来格式化
+            // 这里假设 X 轴的值在 params[0].axisValue 中
+            let xAxisValue = params[0].axisValue;
+            let formattedXAxisValue = xAxisValue; // 格式化时间
+
+            // 最终的格式化字符串
+            return `${formattedXAxisValue}<br/>${result}`;
+          },
         },
         toolbox: {
           feature: {
@@ -296,7 +230,6 @@ export default {
             magicType: { show: true, type: ["line", "bar"] },
             restore: { show: true },
             saveAsImage: { show: true },
-            // saveAsFile: {show: true}
           },
         },
         legend: {
@@ -314,8 +247,6 @@ export default {
         yAxis: [
           {
             type: "value",
-            // name: "Precipitation",
-            // interval: 50,
             axisLabel: {
               formatter: "{value}",
             },
@@ -325,6 +256,7 @@ export default {
           {
             name: this.select1,
             type: "line",
+            showSymbol: false,
             tooltip: {
               valueFormatter: function (value) {
                 return value;
@@ -342,6 +274,7 @@ export default {
       this.end = e[1];
     },
     async queryInfo() {
+        this.show1 = 0;
       if (!this.start) return;
       let url = this.$store.state.url;
       url = url + "query";
@@ -415,6 +348,7 @@ export default {
       link.click();
     },
     async getData() {
+        this.show1 = 0;
       var params = {
         start: this.start,
         end: this.end,
@@ -446,15 +380,28 @@ export default {
 };
 </script>
 
-<style>
-.container {
-  width: 90vw;
-  height: calc(100vh - 60px);
+<style scoped>
+.historyContainer {
+  width: 100%;
+  height: calc(100vh - 60px - 40px);
   /* background-color: aqua; */
-  margin: 0 auto;
   display: flex;
-  justify-content: left;
+  justify-content: space-between;
   align-items: center;
   flex-direction: column;
+}
+#query {
+  height: 100%;
+  width: 100%;
+}
+.block {
+  height: 61px;
+}
+.button {
+  height: 36px;
+}
+.graph {
+  width: 100%;
+  height: calc((100vh - 60px - 61px - 40px - 36px) * 0.98);
 }
 </style>
