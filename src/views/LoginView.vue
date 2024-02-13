@@ -118,7 +118,7 @@ created() {
   position: absolute;
   right: 8vw;
   bottom: 15px;
-
+  cursor: pointer;
 }
 .notice{
   color: red;

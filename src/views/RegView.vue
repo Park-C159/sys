@@ -55,8 +55,23 @@
             />
             <div class="notice" v-if="isCPhone">*请输入合法的手机号</div>
           </div>
-          <Vcode :show="isShow" @success="onSuccess" @close="onClose" />
-          <button class="log" @click="reg">注册</button><br />
+          <div class="input_box idcode">
+            <input
+              type="text"
+              v-model="identifyCode"
+              placeholder="请输入验证码"
+            />
+            <el-button
+              v-if="coutDown == 60"
+              class="btn"
+              type="primary"
+              @click="idCode"
+              round
+              >获取验证码</el-button
+            >
+            <el-button round disabled v-else class="btn">请{{ coutDown }}s后重试</el-button>
+          </div>
+          <button class="log" @click="onSuccess">注册</button><br />
         </div>
       </div>
       <!-- <div>foot</div> -->
@@ -82,57 +97,99 @@ export default {
       isCCUpwd: false,
       isCID: false,
       isCPhone: false,
+      identifyCode: "",
+      coutDown: 60,
+      isIdentifyCode: false,
+      code: "",
     };
   },
   components: {
     Vcode,
   },
   methods: {
-    onSuccess(msg) {
-      // console.log(msg);
+    idCode() {
       let url = this.$store.state.url;
-      url = url + "regist";
-      // console.log(url);
-      let params = {
-        uname: this.uname,
-        upwd: this.upwd,
-        uidcard: this.uidcard,
-        uphone: this.uphone,
-      };
-      console.log(params)
-      // console.log(params)
-      this.$axios
-        .post(url, params)
-        .then((res) => {
-          // console.log(res)
-          let data = res.data;
-          console.log(data);
-          if (data.code == 300) {
-            this.$message({
-              message: data.msg,
-              type: "warning",
-            });
-          } else if (data.code == 200) {
-            this.$message({
-              message: data.msg,
-              type: "success",
-            });
-            this.isShow = false; // 通过验证后，需要手动隐藏模态框
-            setTimeout(() => {
-              this.$router.push("/");
-            }, 1000);
-          } else {
-            this.$message.error(data.msg);
-          }
-        })
-        .catch((err) => {
-          this.$message.error("服务器开小差了，请稍后重试！");
-          console.error(err);
-        });
+      url = url + "sendmessage";
+
+      this.$axios.get(url).then((res)=>{
+        this.code = res.data.data;
+      })
+      if (this.coutDown > 0 && this.coutDown < 60) return; // 如果当前正在倒计时，则不执行任何操作
+      const interval = setInterval(() => {
+        this.coutDown--;
+        if (this.coutDown <= 0) {
+          clearInterval(interval); // 倒计时结束，清除定时器
+          this.coutDown = 60;
+        }
+      }, 1000); // 每秒更新一次倒计时
+    },
+    onSuccess(msg) {
+      var canReg = this.checkCode();
+      if(canReg){
+        this.reg();
+        // console.log(msg);
+        let url = this.$store.state.url;
+        url = url + "regist";
+        // console.log(url);
+        let params = {
+          uname: this.uname,
+          upwd: this.upwd,
+          uidcard: this.uidcard,
+          uphone: this.uphone,
+        };
+        // console.log(params)
+        this.$axios
+          .post(url, params)
+          .then((res) => {
+            // console.log(res)
+            let data = res.data;
+            console.log(data);
+            if (data.code == 300) {
+              this.$message({
+                message: data.msg,
+                type: "warning",
+              });
+            } else if (data.code == 200) {
+              this.$message({
+                message: data.msg,
+                type: "success",
+              });
+              this.isShow = false; // 通过验证后，需要手动隐藏模态框
+              setTimeout(() => {
+                this.$router.push("/");
+              }, 1000);
+            } else {
+              this.$message.error(data.msg);
+            }
+          })
+          .catch((err) => {
+            this.$message.error("服务器开小差了，请稍后重试！");
+            console.error(err);
+          });
+      }else{
+        return
+      }
     },
     // 用户点击遮罩层，应该关闭模态框
     onClose() {
       this.isShow = false;
+    },
+    checkCode(){
+      if(this.identifyCode == ""){
+        this.$message({
+          message: '验证码不可为空',
+          type: 'warning'
+        });
+        return false
+      }else if(this.identifyCode == this.code){
+        return true
+      }else if(this.identifyCode != this.code){
+        this.$message({
+          message: '验证码不匹配',
+          type: 'warning'
+        });
+        return false
+      }
     },
     reg() {
       if (
@@ -147,7 +204,6 @@ export default {
         this.card != "" &&
         this.uphone != ""
       ) {
-        this.isShow = true;
       } else {
         this.$message.error("错误，请核对注册信息！");
       }
@@ -201,6 +257,21 @@ export default {
 </script>
 
 <style scoped>
+.btn {
+  width: 30%;
+  margin-left: 5%;
+}
+.idcode input {
+  border: 0;
+  width: 25%;
+  font-size: 15px;
+  color: #fff;
+  background: transparent;
+  border-bottom: 2px solid #fff;
+  padding: 5px 10px;
+  outline: none;
+  margin-top: 10px;
+}
 .notice {
   color: red;
   font-size: 12px;
@@ -235,10 +306,10 @@ export default {
 }
 #login_box {
   width: 30%;
-  height: 500px;
+  height: 530px;
   background-color: #00000060;
   margin: auto;
-  margin-top: 5%;
+  margin-top: 2.5%;
   text-align: center;
   border-radius: 10px;
   padding: 50px 50px;
@@ -271,7 +342,7 @@ input {
 }
 
 .log {
-  margin-top: 50px;
+  margin-top: 30px;
   width: 60%;
   height: 30px;
   border-radius: 10px;

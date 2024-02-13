@@ -36,6 +36,25 @@
             />
             <div class="notice" v-if="isCPhone">*请输入合法的手机号</div>
           </div>
+
+          <div class="input_box idcode">
+            <input
+              type="text"
+              v-model="identifyCode"
+              placeholder="请输入验证码"
+            />
+            <el-button
+              v-if="coutDown == 60"
+              class="btn"
+              type="primary"
+              @click="idCode"
+              round
+              >获取验证码</el-button
+            >
+            <el-button round disabled v-else class="btn"
+              >请{{ coutDown }}s后重试</el-button
+            >
+          </div>
           <Vcode :show="isShow" @success="onSuccess" @close="onClose" />
           <button class="log" @click="find">找回密码</button><br />
         </div>
@@ -63,12 +82,33 @@ export default {
       isCCUpwd: false,
       isCID: false,
       isCPhone: false,
+
+      identifyCode: "",
+      coutDown: 60,
+      isIdentifyCode: false,
+      code: "",
     };
   },
   components: {
     Vcode,
   },
   methods: {
+    idCode() {
+      let url = this.$store.state.url;
+      url = url + "sendmessage";
+
+      this.$axios.get(url).then((res) => {
+        this.code = res.data.data;
+      });
+      if (this.coutDown > 0 && this.coutDown < 60) return; // 如果当前正在倒计时，则不执行任何操作
+      const interval = setInterval(() => {
+        this.coutDown--;
+        if (this.coutDown <= 0) {
+          clearInterval(interval); // 倒计时结束，清除定时器
+          this.coutDown = 60;
+        }
+      }, 1000); // 每秒更新一次倒计时
+    },
     onSuccess(msg) {
       let url = this.$store.state.url;
       url = url + "find";
@@ -92,7 +132,7 @@ export default {
           } else if (data.code == 200) {
             console.log(data.msg);
             let password = data.data;
-            this.$alert('密码：'+password, "密码已找回，不要再忘记哦~", {
+            this.$alert("密码：" + password, "密码已找回，不要再忘记哦~", {
               confirmButtonText: "确定",
               callback: (action) => {
                 this.$router.push("/");
@@ -120,17 +160,39 @@ export default {
       this.isShow = false;
     },
     find() {
-      if (
-        this.isCUname == false &&
-        this.isCID == false &&
-        this.isCPhone == false &&
-        this.uname != "" &&
-        this.card != "" &&
-        this.uphone != ""
-      ) {
-        this.isShow = true;
-      } else {
-        this.$message.error("错误，请核对注册信息！");
+      var canReg = this.checkCode();
+      if (canReg) {
+        if (
+          this.isCUname == false &&
+          this.isCID == false &&
+          this.isCPhone == false &&
+          this.uname != "" &&
+          this.card != "" &&
+          this.uphone != ""
+        ) {
+          this.onSuccess();
+        } else {
+          this.$message.error("错误，请核对注册信息！");
+        }
+      }else{
+        this.$message.error("系统错误，请联系管理员！");
+      }
+    },
+    checkCode(){
+      if(this.identifyCode == ""){
+        this.$message({
+          message: '验证码不可为空',
+          type: 'warning'
+        });
+        return false
+      }else if(this.identifyCode == this.code){
+        return true
+      }else if(this.identifyCode != this.code){
+        this.$message({
+          message: '验证码不匹配',
+          type: 'warning'
+        });
+        return false
       }
     },
     unameCheck() {
@@ -182,6 +244,21 @@ export default {
 </script>
 
 <style scoped>
+.btn {
+  width: 30%;
+  margin-left: 5%;
+}
+.idcode input {
+  border: 0;
+  width: 25%;
+  font-size: 15px;
+  color: #fff;
+  background: transparent;
+  border-bottom: 2px solid #fff;
+  padding: 5px 10px;
+  outline: none;
+  margin-top: 10px;
+}
 .notice {
   color: red;
   font-size: 12px;
@@ -216,7 +293,7 @@ export default {
 }
 #login_box {
   width: 30%;
-  height: 360px;
+  height: 450px;
   background-color: #00000060;
   margin: auto;
   margin-top: 5%;
