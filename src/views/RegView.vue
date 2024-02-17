@@ -110,9 +110,14 @@ export default {
     idCode() {
       let url = this.$store.state.url;
       url = url + "sendmessage";
+      let params = {
+        phone: this.uphone
+      }
 
-      this.$axios.get(url).then((res)=>{
+      this.$axios.post(url, params).then((res)=>{
         this.code = res.data.data;
+      }).catch((err)=>{
+        console.error(err)
       })
       if (this.coutDown > 0 && this.coutDown < 60) return; // 如果当前正在倒计时，则不执行任何操作
       const interval = setInterval(() => {

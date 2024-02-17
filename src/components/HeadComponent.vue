@@ -3,7 +3,7 @@
     <div class="head"> 
       <el-row>
         <el-col :span="10">
-          功能导航
+          <img class="logo" src="../assets/logo.png" alt="logo">
         </el-col>
         <el-col :span="10">
           <div class="left" @click="toHome">温室种植管理与决策系统</div>
@@ -69,6 +69,11 @@ mounted() {
 </script>
 
 <style scoped>
+.logo{
+  width: 50px;
+  height: 50px;
+  padding: 5px 0;
+}
 .head{
   height: 60px;
   line-height: 60px;
@@ -85,7 +90,7 @@ mounted() {
   cursor: pointer;
 }
 .el-avatar{
-  margin: 5px 10px;
+  margin: 10px 10px;
   position: absolute;
   right: 0;
   cursor:pointer;

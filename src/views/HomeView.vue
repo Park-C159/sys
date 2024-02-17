@@ -57,7 +57,9 @@
           <div v-else-if="select == 4">
             <HistoryComponent />
           </div>
-          <div v-else-if="select == 5">温室设备管理</div>
+          <div v-else-if="select == 5">
+            <EquipmentComponent />
+          </div>
           <div v-else-if="select == 6">温室决策功能</div>
         </el-main>
       </el-container>
@@ -70,6 +72,7 @@ import HeadComponent from "@/components/HeadComponent.vue"
 import MontiorComponent from "@/components/glassHouseMontior/MontiorComponent";
 import HistoryComponent from "@/components/history/HistoryComponent.vue"
 import AgriculturalInfomationComponent from "@/components/agriculturalInfo/AgriculturalInfomationComponent.vue"
+import EquipmentComponent from "@/components/equipment/EquipmentComponent.vue"
 
 import cloudyAndSunny from '@/assets/images/cloudy_and_sunny.png';
 import cloudyAndSunnyHL from '@/assets/images/cloudy_and_sunny_HL.png';
@@ -109,6 +112,7 @@ export default {
     MontiorComponent,
     HeadComponent,
     AgriculturalInfomationComponent,
+    EquipmentComponent,
   },
   methods: {
     handleOpen(key, keyPath) {
