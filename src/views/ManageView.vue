@@ -170,7 +170,7 @@ export default {
   methods: {
     upLoad(){
       let url = this.$store.state.url;
-      url = url + "upload";
+      url = url + "/upload";
       
       
       var date = new Date();

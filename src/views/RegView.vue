@@ -109,7 +109,7 @@ export default {
   methods: {
     idCode() {
       let url = this.$store.state.url;
-      url = url + "sendmessage";
+      url = url + "/sendmessage";
       let params = {
         phone: this.uphone
       }
@@ -134,7 +134,7 @@ export default {
         this.reg();
         // console.log(msg);
         let url = this.$store.state.url;
-        url = url + "regist";
+        url = url + "/regist";
         // console.log(url);
         let params = {
           uname: this.uname,
