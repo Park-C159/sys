@@ -280,7 +280,7 @@ export default {
       this.show1 = 0;
       if (!this.start) return;
       let url = this.$store.state.url;
-      url = url + "query";
+      url = url + "/query";
       let params = {
         start: this.start,
         end: this.end,
@@ -357,7 +357,7 @@ export default {
         end: this.end,
         param: this.select1,
       };
-      let url = this.$store.state.url + "data";
+      let url = this.$store.state.url + "/data";
       await this.$axios
         .post(url, params)
         .then((res) => {
