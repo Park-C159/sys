@@ -95,4 +95,8 @@ mounted() {
   right: 0;
   cursor:pointer;
 }
+
+.el-row, .el-col{
+  height: 60px !important;
+}
 </style>

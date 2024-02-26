@@ -71,11 +71,11 @@ export default {
   name: "LoginView",
   data() {
     return {
-      uname: "CityOfSky1",
+      uname: "CityOfSky",
       upwd: "Yth@985211",
       ucpwd: "Yth@985211",
-      uidcard: "340521200204140513",
-      uphone: "15212371892",
+      uidcard: "",
+      uphone: "15212371894",
       isShow: false,
       isCUname: false,
       isCUpwd: false,
@@ -114,7 +114,7 @@ export default {
         }
       }, 1000); // 每秒更新一次倒计时
     },
-    onSuccess(msg) {
+    onSuccess() {
       let url = this.$store.state.url;
       url = url + "/find";
       let params = {
@@ -122,7 +122,7 @@ export default {
         uidcard: this.uidcard,
         uphone: this.uphone,
       };
-      // console.log(params)
+      console.log(params)
       this.$axios
         .post(url, params)
         .then((res) => {
@@ -166,13 +166,14 @@ export default {
     },
     find() {
       var canReg = this.checkCode();
+      canReg = true;
       if (canReg) {
         if (
           this.isCUname == false &&
           this.isCID == false &&
           this.isCPhone == false &&
           this.uname != "" &&
-          this.card != "" &&
+          this.uidcard != "" &&
           this.uphone != ""
         ) {
           this.onSuccess();

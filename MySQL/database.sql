@@ -5,9 +5,12 @@ DROP DATABASE IF EXISTS sysplus;
 CREATE DATABASE sysplus charset = UTF8;
 USE sysplus;
 
+DROP TABLE IF EXISTS users;
+
 create table users(
 	uid int primary key auto_increment, -- 账号
-	uname varchar(20) unique, -- 昵称
+	uname varchar(20) unique, -- 账号
+	unickname varchar(255), -- 昵称
 	upwd varchar(10) NOT NULL, -- 密码
 	uavatar varchar(500), -- 头像地址
 	uphone varchar(20),  -- 手机号
@@ -17,7 +20,7 @@ create table users(
     uidcard varchar(20) -- IDCARD
 );
 
-insert into users values(null, 'CityOfSky', 'Yth@985211', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201410%2F03%2F20141003163119_XQxzi.thumb.700_0.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1651471678&t=8f49c366f7029cbf3b3ab983f603776a','15212371894', '1', '2002-04-14', '1596770371@qq.com', '');
+insert into users values(null, 'CityOfSky', '星宇', 'Yth@985211', 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201410%2F03%2F20141003163119_XQxzi.thumb.700_0.jpeg&refer=http%3A%2F%2Fb-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1651471678&t=8f49c366f7029cbf3b3ab983f603776a','15212371894', '1', '2002-04-14', '1596770371@qq.com', '');
 insert into users (uname, upwd) values ('root', '544423'),  ('root1', '544423');
 
 create table manage( -- 警告
