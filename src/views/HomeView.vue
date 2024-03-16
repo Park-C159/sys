@@ -53,7 +53,9 @@
           <div v-else-if="select == 2">
             <AgriculturalInfomationComponent />
           </div>
-          <div v-else-if="select == 3">温室预警功能</div>
+          <div v-else-if="select == 3">
+            <EarlyWarningComponent />
+          </div>
           <div v-else-if="select == 4">
             <HistoryComponent />
           </div>
@@ -73,6 +75,7 @@ import MontiorComponent from "@/components/glassHouseMontior/MontiorComponent";
 import HistoryComponent from "@/components/history/HistoryComponent.vue"
 import AgriculturalInfomationComponent from "@/components/agriculturalInfo/AgriculturalInfomationComponent.vue"
 import EquipmentComponent from "@/components/equipment/EquipmentComponent.vue"
+import EarlyWarningComponent from "@/components/earlyWarning/EarlyWarningComponent"
 
 import cloudyAndSunny from '@/assets/images/cloudy_and_sunny.png';
 import cloudyAndSunnyHL from '@/assets/images/cloudy_and_sunny_HL.png';
@@ -113,6 +116,7 @@ export default {
     HeadComponent,
     AgriculturalInfomationComponent,
     EquipmentComponent,
+    EarlyWarningComponent,
   },
   methods: {
     handleOpen(key, keyPath) {

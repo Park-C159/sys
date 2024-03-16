@@ -319,7 +319,7 @@ export default {
       camera,
       dialogVisible: false,
       dialogFormVisible: false,
-      dialogFormVisible2: true,
+      dialogFormVisible2: false,
       uploadAvatar: "",
       avatarUrl: "",
       isUserInfo: true,
