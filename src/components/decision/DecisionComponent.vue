@@ -65,8 +65,6 @@ export default {
         if (valid) {
           let url = this.$store.state.url + "decision";
 
-          console.log(this.form);
-
           this.$axios
             .post(url, this.form)
             .then((res) => {
