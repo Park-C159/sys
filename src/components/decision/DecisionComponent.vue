@@ -69,6 +69,7 @@ export default {
             .post(url, this.form)
             .then((res) => {
               console.log(res);
+              this.tableData.push(res.data.data)
             })
             .catch((err) => {
               console.error(err);
