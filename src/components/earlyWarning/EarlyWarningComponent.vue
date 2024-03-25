@@ -101,7 +101,9 @@ export default {
   },
   methods: {
     GetWarningList() {
-      let url = this.$store.state.url + "warning";
+      var userInfo = JSON.parse(localStorage.userInfo);
+      // console.log(userInfo.uphone)
+      let url = this.$store.state.url + `warning/${userInfo.uphone}`;
       this.$axios.get(url).then((res) => {
         if (res.data.code === 200) {
           var data = res.data.data;
