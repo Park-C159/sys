@@ -20,7 +20,7 @@
         <el-input v-model="form.light_out"></el-input>
       </el-form-item>
       <el-form-item label="空调">
-        <el-switch v-model="form.air"></el-switch>
+        <el-switch @change="switchAir" v-model="form.air"></el-switch>
       </el-form-item>
       <el-form-item>
         <el-button class="predictBtn" type="primary" @click="submitForm"
@@ -32,7 +32,7 @@
       <el-table-column prop="airconditioner" label="空调">{{tableData[0].aireconditioner?"开":"关"}}</el-table-column>
       <el-table-column prop="spray" label="喷淋">{{tableData[0].spray?"开":"关"}}</el-table-column>
       <el-table-column prop="windows" label="百叶窗">{{tableData[0].windows?"开":"关"}}</el-table-column>
-      <el-table-column prop="temperture" label="空调温度">{{tableData[0].temperture}}℃</el-table-column>
+      <el-table-column v-if="form.air" prop="temperture" label="空调温度">{{tableData[0].temperture}}℃</el-table-column>
     </el-table>
   </div>
 </template>
@@ -42,12 +42,12 @@ export default {
   data() {
     return {
       form: {
-        temperature_in: "",
-        humility_in: "",
-        light_in: "",
-        temperature_out: "",
-        humility_out: "",
-        light_out: "",
+        temperature_in: "0",
+        humility_in: "0",
+        light_in: "0",
+        temperature_out: "0",
+        humility_out: "0",
+        light_out: "0",
         air: false,
       },
       tableData:[{
@@ -60,6 +60,9 @@ export default {
     };
   },
   methods: {
+    switchAir(){
+      this.showRes = false
+    },
     submitForm() {
       this.$refs.form.validate((valid) => {
         if (valid) {
