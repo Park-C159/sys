@@ -62,7 +62,9 @@
           <div v-else-if="select == 5">
             <EquipmentComponent />
           </div>
-          <div v-else-if="select == 6">温室决策功能</div>
+          <div v-else-if="select == 6">
+            <DecisionComponent />
+          </div>
         </el-main>
       </el-container>
     </el-container>
@@ -76,6 +78,7 @@ import HistoryComponent from "@/components/history/HistoryComponent.vue"
 import AgriculturalInfomationComponent from "@/components/agriculturalInfo/AgriculturalInfomationComponent.vue"
 import EquipmentComponent from "@/components/equipment/EquipmentComponent.vue"
 import EarlyWarningComponent from "@/components/earlyWarning/EarlyWarningComponent"
+import DecisionComponent from "@/components/decision/DecisionComponent.vue";
 
 import cloudyAndSunny from '@/assets/images/cloudy_and_sunny.png';
 import cloudyAndSunnyHL from '@/assets/images/cloudy_and_sunny_HL.png';
@@ -117,6 +120,7 @@ export default {
     AgriculturalInfomationComponent,
     EquipmentComponent,
     EarlyWarningComponent,
+    DecisionComponent,
   },
   methods: {
     handleOpen(key, keyPath) {
