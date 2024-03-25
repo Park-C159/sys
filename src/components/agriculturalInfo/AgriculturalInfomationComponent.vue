@@ -204,7 +204,7 @@ export default {
   },
   methods: {
     async getAgricultureInfo() {
-      let url = this.$store.state.url + "/manage";
+      let url = this.$store.state.url + "manage";
 
       this.$axios
         .get(url)
@@ -268,7 +268,7 @@ export default {
     },
     addManage() {
       this.drawer = false;
-      let url = this.$store.state.url + "/manage";
+      let url = this.$store.state.url + "manage";
       let formattedDate = dayjs(this.formLabelAlign.date1).format("YYYY-MM-DD");
       let formattedTime = dayjs(this.formLabelAlign.date2).format("HH:mm:ss");
 
@@ -341,7 +341,7 @@ export default {
     },
     modManage() {
       this.modDialogVisible = false;
-      let url = this.$store.state.url + "/manage/" + this.modRow.mid;
+      let url = this.$store.state.url + "manage/" + this.modRow.mid;
       let formatTime = dayjs(this.modRow.mtime).format("YYYY-MM-DD HH:mm:ss");
       let reversedMclassMapping = { "施肥": 1, "浇水": 2, "喷药": 3, "其他": 4 };
       if (reversedMclassMapping[this.modRow.mclass]) {

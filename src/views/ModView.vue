@@ -103,7 +103,7 @@ export default {
 
           // console.log(msg);
           let url = this.$store.state.url;
-          url = url + "/mod";
+          url = url + "mod";
           // console.log(url);
           let params = {
             uname: this.uname,

@@ -95,7 +95,7 @@ export default {
   methods: {
     idCode() {
       let url = this.$store.state.url;
-      url = url + "/sendmessage";
+      url = url + "sendmessage";
       let params = {
         phone: this.uphone
       }
@@ -116,7 +116,7 @@ export default {
     },
     onSuccess() {
       let url = this.$store.state.url;
-      url = url + "/find";
+      url = url + "find";
       let params = {
         uname: this.uname,
         uidcard: this.uidcard,

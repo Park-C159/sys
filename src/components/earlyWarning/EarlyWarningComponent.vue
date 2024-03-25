@@ -101,7 +101,7 @@ export default {
   },
   methods: {
     GetWarningList() {
-      let url = this.$store.state.url + "/warning";
+      let url = this.$store.state.url + "warning";
       this.$axios.get(url).then((res) => {
         if (res.data.code === 200) {
           var data = res.data.data;

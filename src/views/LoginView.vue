@@ -63,7 +63,7 @@ export default {
         this.uname != "" &&
         this.upwd != ""
       ) {
-        var url = this.$store.state.url + "/login";
+        var url = this.$store.state.url + "login";
         var params = {
           uname: this.uname,
           upwd: this.upwd,

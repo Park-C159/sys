@@ -351,7 +351,7 @@ export default {
   methods: {
     idCode() {
       let url = this.$store.state.url;
-      url = url + "/sendmessage";
+      url = url + "sendmessage";
       let params = {
         phone: this.userInfo.uphone,
       };
@@ -393,7 +393,7 @@ export default {
         this.form.pwd != "" &&
         this.form.pwd2 != ""
       ) {
-        let url = this.$store.state.url + `/modpwd/${this.userInfo.uid}`;
+        let url = this.$store.state.url + `modpwd/${this.userInfo.uid}`;
         var params = this.form;
 
         this.$axios
@@ -467,7 +467,7 @@ export default {
       this.isUserMail = false;
     },
     confirm() {
-      let url = this.$store.state.url + `/getUser/${this.userInfo.uid}`;
+      let url = this.$store.state.url + `getUser/${this.userInfo.uid}`;
       var params = this.userInfo;
       this.$axios
         .put(url, params)
@@ -506,7 +506,7 @@ export default {
         .catch((_) => {});
     },
     getUserDB() {
-      let url = this.$store.state.url + `/getUser/${this.userInfo.uid}`;
+      let url = this.$store.state.url + `getUser/${this.userInfo.uid}`;
       this.$axios
         .get(url)
         .then((res) => {
@@ -545,7 +545,7 @@ export default {
       user.sex = parseInt(genderCode) % 2 === 0 ? "女" : "男";
 
       this.userInfo = user;
-      this.uploadAvatar = this.$store.state.url + "/uploadAvatar/" + user.uid;
+      this.uploadAvatar = this.$store.state.url + "uploadAvatar/" + user.uid;
     },
     test() {
       console.log(localStorage);

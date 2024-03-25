@@ -132,7 +132,7 @@ export default {
       // if (this.$store.state.islogin) {
       if (localStorage.isLogin) {
         let url = this.$store.state.url;
-        url = url + "/data";
+        url = url + "data";
         await this.$axios
           .get(url)
           .then((res) => {
