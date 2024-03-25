@@ -34,6 +34,7 @@
       <el-table-column prop="windows" label="百叶窗">{{tableData[0].windows?"开":"关"}}</el-table-column>
       <el-table-column v-if="form.air" prop="temperture" label="空调温度">{{tableData[0].temperture}}℃</el-table-column>
     </el-table>
+    <el-empty v-else description="无结果，请搜索"></el-empty>
   </div>
 </template>
 
