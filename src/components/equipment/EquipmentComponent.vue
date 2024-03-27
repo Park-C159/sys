@@ -13,7 +13,7 @@
           <div class="card">
             <img src="@/assets/images/indoorTemperatureSensor.svg" alt="" />
             <h4>室内温度传感器</h4>
-            <div>正常</div>
+            <div>{{"正常"}}</div>
           </div>
           <div class="card">
             <img src="@/assets/images/outdoorHumiditySensor.svg" alt="" />
@@ -46,17 +46,17 @@
           <div class="card">
             <img src="@/assets/images/airConditioner.svg" alt="" />
             <h4>空调</h4>
-            <div>开启</div>
+            <div>{{this.data.air?"开启":"关闭"}}</div>
           </div>
           <div class="card">
             <img src="@/assets/images/spray.svg" alt="" />
             <h4>喷淋</h4>
-            <div>关闭</div>
+            <div>{{this.data.spray?"开启":"关闭"}}</div>
           </div>
           <div class="card">
             <img src="@/assets/images/window.svg" alt="" />
             <h4>窗户</h4>
-            <div>开启</div>
+            <div>{{this.data.window?"开启":"关闭"}}</div>
           </div>
           <div class="card"></div>
           <div class="card"></div>
@@ -69,7 +69,41 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data(){
+    return {
+      data:null,
+      timer1: null
+    };
+  },
+  methods: {
+    getData(){
+      var totalData = this.$store.state.data;
+      let len = totalData.indoor_temperature.length - 1;
+
+      this.data = {
+        temperature_in: totalData.indoor_temperature[len],
+        temperature_out: totalData.ourdoor_temperature[len],
+        humidity_in:totalData.indoor_humidity[len],
+        humidity_out: totalData.ourdoor_humidity[len],
+        light_in: totalData.indoor_radiation[len],
+        light_out: totalData.ourdoor_radiation[len],
+        air: totalData.air_cond_switch[len],
+        spray: totalData.spray_switch[len],
+        window: totalData.window_switch[len]
+      }
+    }
+  },
+  mounted() {
+    this.getData();
+    this.timer1 = setTimeout(() => {
+      this.getData
+    }, 1000*5);
+  },
+  beforeDestroy() {
+    clearTimeout(this.timer1)
+  },
+};
 </script>
 
 <style scoped>
